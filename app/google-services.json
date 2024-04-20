@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "699623838921",
+    "firebase_url": "https://ecommerce-bb71a-default-rtdb.firebaseio.com",
+    "project_id": "ecommerce-bb71a",
+    "storage_bucket": "ecommerce-bb71a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699623838921:android:e7803dc9f6046da6da2918",
+        "android_client_info": {
+          "package_name": "com.example.princeecommerceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb3w3yoi3iLHapXkoBDGZtA0XM-kShHZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
