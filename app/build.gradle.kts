@@ -52,4 +52,5 @@ dependencies {
     implementation("com.airbnb.android:lottie:3.7.0")
     implementation("com.stripe:stripe-android:20.39.0")
     implementation("com.android.volley:volley:1.2.1")
+    implementation("com.google.android.gms:play-services-wallet:19.3.0")
 }

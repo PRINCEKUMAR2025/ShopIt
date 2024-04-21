@@ -132,34 +132,42 @@
         android:id="@+id/pay_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
         android:text="Check Out"
-        android:textStyle="bold"
         android:textColor="@android:color/white"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/delivery"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
-        android:elevation="5dp"
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="OR"
+        android:textColor="@color/grey_font"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/pay_btn"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="@+id/pay_btn"
+        app:layout_constraintTop_toBottomOf="@+id/pay_btn" />
+
+    <ImageButton
+        android:id="@+id/gpay_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:src="@drawable/gpay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pay_btn"
-        app:layout_constraintVertical_bias="0.307"
-        app:lottie_autoPlay="true"
-        android:visibility="visible"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/delivery" />
+        app:layout_constraintTop_toBottomOf="@+id/pay_btn" />
 
     <ImageView
-        android:layout_width="120dp"
+        android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/stripe"
         android:foregroundGravity="center"

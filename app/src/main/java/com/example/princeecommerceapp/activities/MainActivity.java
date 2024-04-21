@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
             startActivity(new Intent(MainActivity.this,CartActivity.class));
         }
+        else if (id == R.id.menu_orders) {
+
+            startActivity(new Intent(MainActivity.this,OrdersActivity.class));
+        }
         return true;
     }
 }
