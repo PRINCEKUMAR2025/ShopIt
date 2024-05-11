@@ -141,33 +141,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-
-    <TextView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:text="OR"
-        android:textColor="@color/grey_font"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/pay_btn"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="@+id/pay_btn"
-        app:layout_constraintTop_toBottomOf="@+id/pay_btn" />
-
-    <ImageButton
-        android:id="@+id/gpay_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-        android:src="@drawable/gpay"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pay_btn" />
-
     <ImageView
-        android:layout_width="20dp"
+        android:layout_width="120dp"
         android:layout_height="20dp"
         android:src="@drawable/stripe"
         android:foregroundGravity="center"
