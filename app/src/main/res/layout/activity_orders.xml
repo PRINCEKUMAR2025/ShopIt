@@ -41,7 +41,7 @@
         android:gravity="left"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:text="Single Order"
+        android:text="Normal Orders"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />

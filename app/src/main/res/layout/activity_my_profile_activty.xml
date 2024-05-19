@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.MyProfileActivty">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/profile_toolbar"
+        android:background="@color/pink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="My Profile"/>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/Lottie"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="80dp"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/profile" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="User Detail"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:layout_marginTop="112dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Lottie" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Loading User Email.."
+        android:textColor="@color/red"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
+
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/edit_text_bg"
+        android:layout_marginRight="20dp"
+        android:text="Loading User address..."
+        android:textColor="@color/pearl"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
+
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="330dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/textView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address"
+        app:layout_constraintVertical_bias="0.45" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="left"
+        android:foregroundGravity="left"
+        android:text="Update Details"
+        android:textColor="@color/teal_200"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/address"
+        app:layout_constraintTop_toBottomOf="@+id/address"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/up_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_marginRight="16dp"
+        android:inputType="text"
+        android:hint="Name"
+        app:layout_constraintEnd_toEndOf="@+id/textView7"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <EditText
+        android:id="@+id/up_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/up_name"
+        android:layout_marginLeft="16dp"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_marginRight="16dp"
+        android:inputType="text"
+        android:hint="Address Lane"
+        app:layout_constraintEnd_toEndOf="@+id/up_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/up_name"
+        app:layout_constraintTop_toBottomOf="@+id/up_name" />
+
+    <EditText
+        android:id="@+id/up_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_below="@id/up_address"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:inputType="text"
+        android:hint="City"
+        app:layout_constraintEnd_toEndOf="@+id/up_address"
+        app:layout_constraintStart_toStartOf="@+id/up_address"
+        app:layout_constraintTop_toBottomOf="@+id/up_address" />
+
+    <EditText
+        android:id="@+id/up_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/up_city"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:inputType="number"
+        android:hint="Postal Code"
+        app:layout_constraintEnd_toEndOf="@+id/up_city"
+        app:layout_constraintStart_toStartOf="@+id/up_city"
+        app:layout_constraintTop_toBottomOf="@+id/up_city" />
+
+    <EditText
+        android:id="@+id/up_phone"
+        android:layout_width="match_parent"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/up_code"
+        android:layout_marginLeft="16dp"
+        android:inputType="number"
+        android:layout_marginRight="16dp"
+        android:hint="Phone Number"
+        app:layout_constraintEnd_toEndOf="@+id/up_code"
+        app:layout_constraintStart_toStartOf="@+id/up_code"
+        app:layout_constraintTop_toBottomOf="@+id/up_code" />
+
+    <Button
+        android:id="@+id/buttonUpdateAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/black"
+        android:text="Update Address"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/up_phone" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
