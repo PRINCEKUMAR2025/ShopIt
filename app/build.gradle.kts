@@ -54,4 +54,5 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.google.android.gms:play-services-wallet:19.3.0")
     implementation("com.stripe:stripe-java:20.77.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

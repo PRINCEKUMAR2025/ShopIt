@@ -48,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 if (item.getItemId()==R.id.home){
-
-                    Toast.makeText(MainActivity.this, "Reloading...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Reloading..", Toast.LENGTH_SHORT).show();
                 }
                 if (item.getItemId()==R.id.menu_my_cart){
                     Intent intent=new Intent(MainActivity.this,CartActivity.class);
@@ -61,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (item.getItemId()==R.id.profile){
                     Intent intent=new Intent(MainActivity.this,MyProfileActivty.class);
+                    startActivity(intent);
+                }
+                if (item.getItemId()==R.id.chatbot){
+                    Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(MainActivity.this,ChatBot.class);
                     startActivity(intent);
                 }
                 return true;
