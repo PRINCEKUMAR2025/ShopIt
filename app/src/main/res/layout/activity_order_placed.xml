@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.OrderPlacedActivity">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -28,7 +29,7 @@
         android:layout_marginTop="36dp"
         android:gravity="center"
         android:text="Order Placed Successfully"
-        android:textColor="@color/green"
+        android:textColor="@color/peach"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +43,7 @@
         android:layout_height="150dp"
         android:gravity="center"
         android:text="Thanks for your order! 🛍️\n We've received it and are on it. Stay tuned for updates!"
-        android:textColor="@color/pink"
+        android:textColor="@color/pearl"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

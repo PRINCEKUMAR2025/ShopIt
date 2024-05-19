@@ -105,8 +105,6 @@ public class PaymentActivity extends AppCompatActivity {
 
         subTotal.setText("Rs "+amount);
         total.setText("Rs "+totalamount);
-
-        Toast.makeText(this, "Loading payments detail..", Toast.LENGTH_SHORT).show();
 //        NEW STRIPE
 
         PaymentConfiguration.init(this,PUBLISH_KEY);

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     tools:context=".fragments.HomeFragment">
 
     <LinearLayout
@@ -32,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/amethysta"
+                android:textColor="@color/black"
                 android:text="Category"
                 android:textSize="21sp"
                 android:textStyle="bold" />
@@ -70,6 +72,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -83,6 +86,7 @@
                         android:layout_marginLeft="9dp"
                         android:fontFamily="@font/amethysta"
                         android:text="New Products"
+                        android:textColor="@color/black"
                         android:textSize="21sp"
                         android:textStyle="bold" />
 
@@ -91,6 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/new_product_name"
                         android:layout_marginLeft="9dp"
+                        android:textColor="@color/black"
                         android:text="We provide best products." />
 
                     <TextView
@@ -133,6 +138,7 @@
                     android:layout_marginLeft="9dp"
                     android:fontFamily="@font/amethysta"
                     android:text="Popular Products"
+                    android:textColor="@color/black"
                     android:textSize="21sp"
                     android:textStyle="bold" />
 
@@ -141,6 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/popular_products"
                     android:layout_marginLeft="9dp"
+                    android:textColor="@color/black"
                     android:text="We provide best products." />
 
                 <TextView

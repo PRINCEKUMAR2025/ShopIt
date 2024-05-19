@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/pink</item>
         <item name="colorPrimary">@color/pink</item>
         <item name="colorBackgroundFloating">@color/pink</item>
+        <item name="android:statusBarColor">#00000000</item>
     </style>
 
     <style name="Theme.PrinceEcommerceApp" parent="Base.Theme.PrinceEcommerceApp" />

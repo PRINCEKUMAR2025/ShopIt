@@ -8,10 +8,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="pink">#ff5ccb</color>
+    <color name="pink">#FFE5B4</color>
     <color name="blue">#00f0ff</color>
     <color name="backgroundColor">#FFFCFC</color>
     <color name="textHeading">#008eff</color>
     <color name="red">#FF0000</color>
     <color name="green">#00FF00</color>
+    <color name="bonewhite">#F9F6EE</color>
+    <color name="peach">#FFE5B4</color>
+    <color name="pearl">#F7A6A6</color>
 </resources>

@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:padding="7dp"
-        android:background="#FB9FDE"
+        android:background="#D1D9E0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/amethysta"
+                android:textColor="@color/black"
                 android:text="Current Date: "
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -36,6 +37,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/amethysta"
                 android:text="Current Date: "
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -61,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:fontFamily="@font/amethysta"
                 android:text="Current Time: "
                 android:textSize="16sp"
@@ -71,6 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:fontFamily="@font/amethysta"
                 android:text="Current Time: "
                 android:textSize="16sp"
@@ -88,6 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:fontFamily="@font/amethysta"
                 android:text="Product Name: "
                 android:textSize="16sp"
@@ -98,6 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:fontFamily="@font/amethysta"
                 android:text="Current Date: "
                 android:textSize="16sp"
@@ -116,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/amethysta"
+                android:textColor="@color/black"
                 android:text="Product Price:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -125,6 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/black"
                 android:fontFamily="@font/amethysta"
                 android:text="Current Date: "
                 android:textSize="16sp"
@@ -143,6 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/amethysta"
+                android:textColor="@color/black"
                 android:text="Total Quantity "
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -153,6 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/amethysta"
+                android:textColor="@color/black"
                 android:text="Total Quantity"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -173,6 +183,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/amethysta"
                 android:text="Total Price : Rs"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -182,6 +193,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/amethysta"
+                android:textColor="@color/black"
                 android:text="Total price "
                 android:textSize="16sp"
                 android:textStyle="bold" />

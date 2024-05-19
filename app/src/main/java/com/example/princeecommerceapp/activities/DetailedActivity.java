@@ -148,7 +148,6 @@ public class DetailedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (totalQuantity<10){
-                    Toast.makeText(DetailedActivity.this, "To order more than 1 item add to cart..", Toast.LENGTH_SHORT).show();
                     totalQuantity++;
                     quantity.setText(String.valueOf(totalQuantity));
 

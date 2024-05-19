@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.CartPaymentActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -36,6 +37,7 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_marginStart="84dp"
         android:text="Subtotal"
         android:textSize="18sp"
@@ -47,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:textColor="@color/black"
         android:text="Discount"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textView12"
@@ -59,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Shipping"
+        android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textView14"
         app:layout_constraintStart_toStartOf="@+id/textView14"
@@ -68,6 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="84dp"
+        android:textColor="@color/black"
         android:text="Rs 0"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:textColor="@color/red"
-        android:text="Rs 599"
+        android:text="Rs -599"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/sub_total"
         app:layout_constraintStart_toStartOf="@+id/sub_total"
@@ -92,16 +97,17 @@
         android:layout_marginTop="12dp"
         android:text="Rs 199"
         android:textSize="18sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/textView17"
         app:layout_constraintStart_toStartOf="@+id/textView17"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <View
         android:id="@+id/divider5"
-        android:layout_width="430dp"
+        android:layout_width="330dp"
         android:layout_height="1dp"
         android:layout_marginTop="24dp"
-        android:background="?android:attr/listDivider"
+        android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
@@ -135,28 +141,13 @@
         android:layout_marginTop="44dp"
         android:text="Check Out"
         android:textStyle="bold"
+        android:backgroundTint="@color/black"
+        android:textColorHint="@color/white"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/delivery"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
-        android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pay_btn"
-        app:layout_constraintVertical_bias="0.307"
-        app:lottie_autoPlay="true"
-        android:visibility="visible"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/delivery" />
 
     <ImageView
         android:layout_width="120dp"

@@ -42,8 +42,6 @@ import java.util.Map;
 public class CartPaymentActivity extends AppCompatActivity {
 
     PaymentSheet paymentSheet;
-    String paymentIntentClientSecret;
-    PaymentSheet.CustomerConfiguration configuration;
 
     Toolbar toolbar;
     TextView subTotal,discount,shipping,total;

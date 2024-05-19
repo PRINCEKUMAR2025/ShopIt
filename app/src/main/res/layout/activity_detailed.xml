@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.DetailedActivity">
 
     <ImageView
@@ -32,6 +33,7 @@
         android:layout_height="wrap_content"
         android:elevation="10dp"
         app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailed_img">
@@ -41,6 +43,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -87,6 +90,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="am following the standard example of how to uijasdfjk ASFIOH AF\NJDFGKHHJA S ASDKFJAKS DFKASD ASDFJASKGKA SD"/>
 
             <TextView
@@ -110,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rs "
                 android:textStyle="bold"
-                android:textColor="@color/purple_700"/>
+                android:textColor="@color/pink"/>
 
             <TextView
                 android:id="@+id/detailed_price"
@@ -119,7 +123,7 @@
                 android:text="20"
                 android:textStyle="bold"
                 android:fontFamily="@font/amethysta"
-                android:textColor="@color/pink"/>
+                android:textColor="@color/black"/>
 
 
         </LinearLayout>
@@ -142,6 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1"
+                    android:textColor="@color/pearl"
                     android:textSize="30sp"
                     android:textStyle="bold"/>
 
@@ -164,6 +169,7 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/mycart"
         android:drawableTint="@color/white"
+        android:textColor="@color/white"
         android:padding="14dp"
         android:text="Add To Cart"
         android:textStyle="bold"
@@ -176,7 +182,8 @@
 
     <Button
         android:id="@+id/buy_now"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_baseline_shopping_cart_24"

@@ -31,6 +31,7 @@
             android:layout_marginTop="6dp"
             android:fontFamily="@font/amethysta"
             android:text="Product Name"
+            android:textColor="@color/black"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

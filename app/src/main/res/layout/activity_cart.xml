@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.CartActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -27,6 +28,8 @@
         android:fontFamily="@font/amethysta"
         android:gravity="center"
         android:padding="18dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
         android:text="Total Price : Rs 0"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -53,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center_horizontal"
-        android:backgroundTint="@color/purple_700"
+        android:backgroundTint="@color/black"
         android:drawableLeft="@drawable/ic_baseline_shopping_cart_24"
         android:drawableTint="@color/white"
         android:padding="14dp"

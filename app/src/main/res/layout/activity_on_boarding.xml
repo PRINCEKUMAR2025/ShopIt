@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:padding="20dp"
     tools:context=".activities.OnBoardingActivity">
 
@@ -30,6 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/black"
             android:text="Lets get started" />
 
         <LinearLayout
@@ -45,8 +48,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:text="Swipe"
+            android:textColor="@color/black"
             android:layout_alignParentBottom="true"
             android:background="#00000000"
+            android:drawableTint="@color/black"
             android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
             android:paddingBottom="30dp" />
 

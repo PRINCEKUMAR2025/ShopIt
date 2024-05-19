@@ -69,7 +69,7 @@ public class OrdersActivity extends AppCompatActivity {
                             NormalOrder = stringBuilder.toString();
                             normalOrder.setText(NormalOrder);
                         } else {
-                            Toast.makeText(OrdersActivity.this, "No Orders", Toast.LENGTH_SHORT).show();
+                            normalOrder.setText("No Orders..");
                         }
                     }
                 });
@@ -92,7 +92,7 @@ public class OrdersActivity extends AppCompatActivity {
                             CartOrder = stringBuilder.toString();
                             cartOrder.setText(CartOrder);
                         } else {
-                            Toast.makeText(OrdersActivity.this, "No Orders", Toast.LENGTH_SHORT).show();
+                            normalOrder.setText("No Orders..");
                         }
                     }
                 });
