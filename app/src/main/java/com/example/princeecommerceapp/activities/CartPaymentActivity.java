@@ -245,10 +245,10 @@ public class CartPaymentActivity extends AppCompatActivity {
 
     void placeCartOrder(){
         Map<String, String> map = new HashMap<>();
-        map.put("userCartOrder",Final_cart_order);
+        map.put("userOrder",Final_cart_order);
 
         firestore.collection("Orders").document(auth.getCurrentUser().getUid())
-                .collection("CartOrders").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                .collection("NormalOrder").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()){

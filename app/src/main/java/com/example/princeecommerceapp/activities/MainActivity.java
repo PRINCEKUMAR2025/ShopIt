@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.princeecommerceapp.R;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     FirebaseAuth auth;
     BottomNavigationView nav;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         auth=FirebaseAuth.getInstance();
         toolbar=findViewById(R.id.home_toolbar);
         nav=findViewById(R.id.bottom_navigation);
+        progressBar=findViewById(R.id.main_progress);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -48,7 +52,11 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 if (item.getItemId()==R.id.home){
-                    Toast.makeText(MainActivity.this, "Reloading..", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.VISIBLE);
+                    Intent intent=new Intent(MainActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(MainActivity.this, "Refreshed..", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 if (item.getItemId()==R.id.menu_my_cart){
                     Intent intent=new Intent(MainActivity.this,CartActivity.class);
@@ -63,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 if (item.getItemId()==R.id.chatbot){
-                    Toast.makeText(MainActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Under Development..", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(MainActivity.this,ChatBot.class);
                     startActivity(intent);
                 }

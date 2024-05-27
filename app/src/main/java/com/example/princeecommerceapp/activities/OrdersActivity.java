@@ -3,33 +3,35 @@ package com.example.princeecommerceapp.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.princeecommerceapp.R;
-import com.example.princeecommerceapp.models.AddressModel;
-import com.example.princeecommerceapp.models.MyCartModel;
+import com.example.princeecommerceapp.adapters.OrdersAdapter;
+import com.example.princeecommerceapp.models.OrdersModel;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrdersActivity extends AppCompatActivity {
 
-    TextView normalOrder,cartOrder;
-    FirebaseFirestore firestore;
+    RecyclerView recyclerView;
+    private List<OrdersModel> orderModelList;
+    private OrdersAdapter ordersAdapter;
     FirebaseAuth auth;
-    String NormalOrder;
-    String CartOrder;
+    FirebaseFirestore firestore;
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class OrdersActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.payment_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,54 +48,28 @@ public class OrdersActivity extends AppCompatActivity {
             }
         });
 
-        firestore=FirebaseFirestore.getInstance();
-        auth=FirebaseAuth.getInstance();
-        normalOrder=findViewById(R.id.normal_order);
-        cartOrder=findViewById(R.id.cart_order);
-        getNormalOrder();
-        getCartOrder();
-    }
-    void getNormalOrder() {
-        firestore.collection("Orders")
-                .document(auth.getCurrentUser().getUid())
-                .collection("NormalOrder")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            StringBuilder stringBuilder = new StringBuilder();
-                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
-                                String userOrder = doc.getString("userOrder");
-                                stringBuilder.append(userOrder).append("\n").append("\n");
-                            }
-                            NormalOrder = stringBuilder.toString();
-                            normalOrder.setText(NormalOrder);
-                        } else {
-                            normalOrder.setText("No Orders..");
-                        }
-                    }
-                });
-    }
+        firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-    void getCartOrder() {
-        firestore.collection("Orders")
-                .document(auth.getCurrentUser().getUid())
-                .collection("CartOrders")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        recyclerView = findViewById(R.id.normal_order_recycler);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        orderModelList = new ArrayList<>();
+        ordersAdapter = new OrdersAdapter(getApplicationContext(), orderModelList);
+        recyclerView.setAdapter(ordersAdapter);
+
+        firestore.collection("Orders").document(auth.getCurrentUser().getUid())
+                .collection("NormalOrder").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            StringBuilder stringBuilder = new StringBuilder();
                             for (DocumentSnapshot doc : task.getResult().getDocuments()) {
-                                String userOrder = doc.getString("userCartOrder");
-                                stringBuilder.append(userOrder).append("\n").append("\n");
+                                OrdersModel orderModel = doc.toObject(OrdersModel.class);
+                                orderModelList.add(orderModel);
+                                ordersAdapter.notifyDataSetChanged();
                             }
-                            CartOrder = stringBuilder.toString();
-                            cartOrder.setText(CartOrder);
-                        } else {
-                            normalOrder.setText("No Orders..");
+                        }else {
+                            Toast.makeText(OrdersActivity.this, "You have no orders", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

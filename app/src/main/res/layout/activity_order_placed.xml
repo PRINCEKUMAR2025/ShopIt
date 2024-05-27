@@ -7,6 +7,18 @@
     android:background="@color/white"
     tools:context=".activities.OrderPlacedActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/order_placed_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink"
+        app:title="Order Placed"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/Lottie"
         android:layout_width="300dp"
@@ -30,6 +42,9 @@
         android:gravity="center"
         android:text="Order Placed Successfully"
         android:textColor="@color/peach"
+        android:background="@drawable/edit_text_bg"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

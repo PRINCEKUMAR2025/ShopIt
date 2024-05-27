@@ -3,6 +3,8 @@ package com.example.princeecommerceapp.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.princeecommerceapp.R;
+import com.example.princeecommerceapp.adapters.OrdersAdapter;
+import com.example.princeecommerceapp.adapters.ProfileAddressAdapter;
 import com.example.princeecommerceapp.models.AddressModel;
+import com.example.princeecommerceapp.models.OrdersModel;
+import com.example.princeecommerceapp.models.ProfileAddressModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,25 +28,28 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MyProfileActivty extends AppCompatActivity {
     Toolbar toolbar;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
-    TextView name,email,address;
+    TextView name,email;
     String UserAddress;
     EditText newname, newaddress, newcity, newpostalCode, newphoneNumber;
     Button update;
-
+    RecyclerView recyclerView;
+    private List<ProfileAddressModel> profileModelList;
+    private ProfileAddressAdapter addressAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile_activty);
         toolbar = findViewById(R.id.profile_toolbar);
         name=findViewById(R.id.name);
-        address=findViewById(R.id.address);
         email=findViewById(R.id.email);
         newname = findViewById(R.id.up_name);
         newaddress = findViewById(R.id.up_address);
@@ -48,6 +57,7 @@ public class MyProfileActivty extends AppCompatActivity {
         newpostalCode = findViewById(R.id.up_code);
         newphoneNumber = findViewById(R.id.up_phone);
         update = findViewById(R.id.buttonUpdateAddress);
+        recyclerView=findViewById(R.id.recycler_view_profile);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,18 +72,23 @@ public class MyProfileActivty extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         email.setText(auth.getCurrentUser().getEmail());
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        profileModelList = new ArrayList<>();
+        addressAdapter = new ProfileAddressAdapter(getApplicationContext(), profileModelList);
+        recyclerView.setAdapter(addressAdapter);
+
         firestore.collection("CurrentUser").document(auth.getCurrentUser().getUid())
                 .collection("Address").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            StringBuilder stringBuilder = new StringBuilder();
                             for (DocumentSnapshot doc : task.getResult().getDocuments()) {
-                                String userOrder = doc.getString("userAddress");
-                                stringBuilder.append(userOrder).append("\n").append("\n");
+                                ProfileAddressModel profileModel = doc.toObject(ProfileAddressModel.class);
+                                profileModelList.add(profileModel);
+                                addressAdapter.notifyDataSetChanged();
                             }
-                            UserAddress = stringBuilder.toString();
-                            address.setText(UserAddress);
+                        }else {
+                            Toast.makeText(MyProfileActivty.this, "You have not added address..", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
