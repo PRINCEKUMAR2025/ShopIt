@@ -8,15 +8,5 @@
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
-    <item android:id="@+id/username_item"
-        android:icon="@drawable/ic_search"
-        android:title="Profile"
-        />
-
-    <item android:id="@+id/get_premium"
-        android:icon="@drawable/ic_search"
-        android:title="Buy premium"
-        />
-
 
 </menu>

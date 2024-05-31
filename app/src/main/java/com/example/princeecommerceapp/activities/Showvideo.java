@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class Showvideo extends AppCompatActivity {
     String name,url,uname;
     Boolean likechecker =false;
     Button button;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,16 @@ public class Showvideo extends AppCompatActivity {
         databaseReference=database.getReference("video");
         likesrefernce=database.getReference("likes");
         button=findViewById(R.id.upload_video);
+
+        toolbar = findViewById(R.id.address_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,23 +202,6 @@ public class Showvideo extends AppCompatActivity {
 
         firebaseRecyclerAdapter.startListening();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.username_item:
-//                Intent intent =new Intent(Showvideo.this,Username.class);
-//                startActivity(intent);
-//                return true;
-//        }
-        if (item.getItemId()==R.id.username_item){
-            Toast.makeText(this, "Nothing..", Toast.LENGTH_SHORT).show();
-        } else if (item.getItemId()==R.id.get_premium) {
-            Toast.makeText(this, "Nothing..", Toast.LENGTH_SHORT).show();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
