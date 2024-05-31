@@ -2,10 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/menu_videos"
+        android:title="Logout"
+        android:icon="@drawable/like"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/menu_logout"
         android:title="Logout"
         android:icon="@drawable/ic_baseline_loginout"
         app:showAsAction="always"/>
+
+
 
 </menu>

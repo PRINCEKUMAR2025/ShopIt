@@ -101,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Signing Out..", Toast.LENGTH_SHORT).show();
             finish();
         }
+        if (id==R.id.menu_videos){
+            startActivity(new Intent(MainActivity.this,Showvideo.class));
+        }
         return true;
     }
 }

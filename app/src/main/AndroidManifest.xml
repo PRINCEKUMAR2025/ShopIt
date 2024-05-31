@@ -16,6 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.UploadVideo"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Showvideo"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ShowVideo"
+            android:exported="false" />
+        <activity
             android:name=".activities.ChatBot"
             android:exported="false" />
         <activity
