@@ -51,4 +51,22 @@ The application supports real-time browsing, ensuring that users can view the la
 This feature, powered by Firebase, makes the shopping experience dynamic and engaging.
 
 
+![IMG-20240531-WA0010](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/17680f69-31a9-4b30-8257-835307298506)
+![IMG-20240531-WA0009](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/72bf05ec-241d-4712-b79e-9ebd4a71d8f3)
+![IMG-20240531-WA0008](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/a5cce1e0-a319-4762-b2ff-da5ca71087e1)
+![IMG-20240531-WA0007](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/3d1ff6b9-b98d-4fe2-a824-8500e6374d65)
+![IMG-20240531-WA0006](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/88ed7413-4e31-43f2-8d60-fddaece6bc7c)
+![IMG-20240531-WA0005](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/40304408-d81b-4a3b-9710-04149aa7f6c9)
+![IMG-20240531-WA0004](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/7bc18ed1-783c-49d7-8957-13981867c2a5)
+![IMG-20240531-WA0003](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/d8f179b9-d57a-42a9-925b-7e71b306af3b)
+![IMG-20240531-WA0002](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/335b4f8b-e7e3-4894-80fb-9993f380b408)
+![IMG-20240531-WA0001](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/1bd1a369-1876-428a-ab25-98b8578d17a3)
+![IMG-20240531-WA0016](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/0c81c3b9-1433-41e5-85b6-6926f3d871c2)
+![IMG-20240531-WA0015](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/d50dd58a-4c17-490d-84db-0f1cdc5ef0b1)
+![IMG-20240531-WA0014](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/f364dee6-8484-4c0a-bf2d-b4d6a117ab74)
+![IMG-20240531-WA0013](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/89b02b1c-c7f2-4f6b-a260-243a7438b548)
+![IMG-20240531-WA0012](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/fe61bd5b-66a5-49a1-94a9-86ccbe9be2e6)
+![IMG-20240531-WA0011](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/0935349e-906a-45dd-932e-8372a1b22513)
+
+
 
