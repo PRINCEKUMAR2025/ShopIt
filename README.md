@@ -50,13 +50,5 @@ Real-Time Product Browsing within the App
 The application supports real-time browsing, ensuring that users can view the latest products and deals without delays.
 This feature, powered by Firebase, makes the shopping experience dynamic and engaging.
 
-![IMG-20240531-WA0011](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/62502fdd-272c-4814-9028-92ef153037ef)
-![IMG-20240531-WA0012](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/fe358a65-364d-4ce7-8a01-602ac67f07f5)
-![IMG-20240531-WA0013](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/276daa71-4e2c-491d-aff4-e7b06d12bdb0)
-![IMG-20240531-WA0014](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/b79af389-ab89-417b-97a8-b97f01691a5b)
-![IMG-20240531-WA0015](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/3a7cd1bd-fe8b-417d-a12c-74ef223002ab)
-![IMG-20240531-WA0016](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/281e3c33-4c03-4103-a40f-d7115a05dbc4)
-![IMG-20240531-WA0001](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/d8845e0c-779c-420e-bb2a-5d2768ada457)
-![IMG-20240531-WA0002](https://github.com/PRINCEKUMAR2025/ShopIt/assets/96488489/f72e3b36-8ddf-45f1-a9c5-38a02bae9cb2)
 
 
