@@ -19,6 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.princeecommerceapp.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
@@ -38,6 +40,10 @@ public class GoogleFormActivity extends AppCompatActivity {
         edtPhone = findViewById(R.id.edt_Phone);
         progressDialog = findViewById(R.id.progress_Bar);
         btn=findViewById(R.id.btnSubmit);
+
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

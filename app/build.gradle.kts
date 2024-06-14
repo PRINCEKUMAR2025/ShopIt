@@ -89,4 +89,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-inappmessaging-display")
+    implementation("com.google.android.gms:play-services-ads:23.1.0")
 }

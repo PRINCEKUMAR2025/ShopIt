@@ -49,7 +49,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView subTotal,discount,shipping,total;
-    int subtotal,dis,ship,totalamount;
+    int subtotal,dis,ship,totalamount,coins;
     String totalpay;
     String totalamounttopay;
     FirebaseFirestore firestore;
@@ -59,7 +59,6 @@ public class PaymentActivity extends AppCompatActivity {
     String address;
     String productName;
     String final_Order ="";
-
     String SECRET_KEY = "sk_test_51Os3QnSGRnnzLmir6qr1NcJJrcHJaZtvt7tOV9suMGRklSkaCtEbYeQNYTJfBImKhwLzndje57CqP22283OaB0fH009sux7Cta";
     String PUBLISH_KEY="pk_test_51Os3QnSGRnnzLmir77n9qIxmPS3WcbFy4DEQ5jiu7H1RBx5ud7Uzqj0R42zo7mMi4RLlI0X3lFGicbDTpeZuFr5d00ylj0mYBh";
     String customerID;
@@ -94,6 +93,7 @@ public class PaymentActivity extends AppCompatActivity {
         subtotal=amount;
         dis=-599;
         ship=199;
+
         totalamount = subtotal+dis+ship;
         totalpay=String.valueOf(totalamount);
         totalamounttopay=totalpay+"00";

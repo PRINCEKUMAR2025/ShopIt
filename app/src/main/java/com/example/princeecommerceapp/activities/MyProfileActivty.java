@@ -6,8 +6,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +24,19 @@ import com.example.princeecommerceapp.adapters.ProfileAddressAdapter;
 import com.example.princeecommerceapp.models.AddressModel;
 import com.example.princeecommerceapp.models.OrdersModel;
 import com.example.princeecommerceapp.models.ProfileAddressModel;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -37,13 +53,16 @@ public class MyProfileActivty extends AppCompatActivity {
     Toolbar toolbar;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
-    TextView name,email;
+    TextView name,email,videoAd;
     String UserAddress;
     EditText newname, newaddress, newcity, newpostalCode, newphoneNumber;
     Button update;
     RecyclerView recyclerView;
     private List<ProfileAddressModel> profileModelList;
     private ProfileAddressAdapter addressAdapter;
+    InterstitialAd mInterstitialAd;
+    private int totalcoins = 0;
+    private int pervid = 5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +77,12 @@ public class MyProfileActivty extends AppCompatActivity {
         newphoneNumber = findViewById(R.id.up_phone);
         update = findViewById(R.id.buttonUpdateAddress);
         recyclerView=findViewById(R.id.recycler_view_profile);
+        videoAd=findViewById(R.id.videoAd);
+        firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        email.setText(auth.getCurrentUser().getEmail());
+
+        fetchCurrentCoins();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -68,9 +93,62 @@ public class MyProfileActivty extends AppCompatActivity {
             }
         });
 
-        firestore = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
-        email.setText(auth.getCurrentUser().getEmail());
+        // ad loading
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+       /* Fix banner ad AdView adView = new AdView(this);
+
+        adView.setAdSize(AdSize.BANNER);
+
+        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+// TODO: Add adView to your view hierarchy.*/
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this,"ca-app-pub-8361032125437158/4624009127", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        mInterstitialAd = null;
+                    }
+                });
+
+        //
+        videoAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mInterstitialAd != null) {
+                    mInterstitialAd.show(MyProfileActivty.this);
+                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                        @Override
+                        public void onAdDismissedFullScreenContent() {
+                            mInterstitialAd = null;
+                            updateCoinsAfterAd();
+                        }
+
+                        @Override
+                        public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                            mInterstitialAd = null;
+                        }
+                    });
+                } else {
+                    Toast.makeText(MyProfileActivty.this, "Ad not available at the moment..", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         profileModelList = new ArrayList<>();
@@ -144,4 +222,61 @@ public class MyProfileActivty extends AppCompatActivity {
             }
         });
     }
+
+    private void fetchCurrentCoins() {
+        String userId = auth.getCurrentUser().getUid();
+        firestore.collection("CurrentUser").document(userId)
+                .collection("Coins").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                                if (doc.exists()) {
+                                    totalcoins = doc.getLong("amount").intValue();
+                                    videoAd.setText(String.valueOf(totalcoins));
+                                } else {
+                                    Log.d("Firestore", "No such document");
+                                }
+                            }
+                        } else {
+                            Log.d("Firestore", "get failed with ", task.getException());
+                        }
+                    }
+                });
+    }
+    private void updateCoinsAfterAd() {
+        String userId = auth.getCurrentUser().getUid();
+        totalcoins += pervid;
+        videoAd.setText(String.valueOf(totalcoins));
+
+        // Reference to the single document for coins (assuming there's only one document)
+        firestore.collection("CurrentUser").document(userId).collection("Coins")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                                // Update the 'amount' field of the existing document
+                                doc.getReference().update("amount", totalcoins)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("Firestore", "DocumentSnapshot successfully updated!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("Firestore", "Error updating document", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d("Firestore", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
 }
