@@ -48,7 +48,7 @@ public class PaymentActivity extends AppCompatActivity {
     PaymentSheet paymentSheet;
 
     Toolbar toolbar;
-    TextView subTotal,discount,shipping,total;
+    TextView subTotal,discount,shipping,total,coinsview;
     int subtotal,dis,ship,totalamount,coins;
     String totalpay;
     String totalamounttopay;
@@ -70,9 +70,10 @@ public class PaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment);
         firestore=FirebaseFirestore.getInstance();
         auth=FirebaseAuth.getInstance();
-
+        fetchCurrentCoins();
         toolbar = findViewById(R.id.payment_toolbar);
         payBtn = findViewById(R.id.pay_btn);
+        coinsview=findViewById(R.id.coinsview);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -275,4 +276,35 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 });
     }
+    private void fetchCurrentCoins() {
+        String userId = auth.getCurrentUser().getUid();
+        firestore.collection("CurrentUser").document(userId)
+                .collection("Coins").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("Firestore", "Task successful");
+                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                                if (doc.exists()) {
+                                    Log.d("Firestore", "Document exists");
+                                    coins = doc.getLong("amount").intValue();
+                                    Log.d("Firestore", "Coins value: " + coins);
+                                    // Update coinsview here
+                                    coinsview.setText(String.valueOf(-coins));
+                                    // Update total amount
+                                    totalamount = subtotal + dis + ship - coins;
+                                    totalpay = String.valueOf(totalamount);
+                                    totalamounttopay = totalpay + "00";
+                                    total.setText("Rs " + totalamount);
+                                } else {
+                                    Log.d("Firestore", "No such document");
+                                }
+                            }
+                        } else {
+                            Log.d("Firestore", "get failed with ", task.getException());
+                        }
+                    }
+                });
+    }
+
 }

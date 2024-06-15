@@ -44,8 +44,8 @@ public class CartPaymentActivity extends AppCompatActivity {
     PaymentSheet paymentSheet;
 
     Toolbar toolbar;
-    TextView subTotal,discount,shipping,total;
-    int subtotal,dis,ship,totalamount;
+    TextView subTotal,discount,shipping,total,coinsview;
+    int subtotal,dis,ship,totalamount,coins;
     String Final_cart_order;
     FirebaseAuth auth;
     FirebaseFirestore firestore;
@@ -64,8 +64,11 @@ public class CartPaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart_payment);
         auth=FirebaseAuth.getInstance();
         firestore=FirebaseFirestore.getInstance();
-        cartPay=findViewById(R.id.pay_btn);
 
+        fetchCurrentCoins();
+
+        cartPay=findViewById(R.id.pay_btn);
+        coinsview=findViewById(R.id.coinsview);
         toolbar = findViewById(R.id.payment_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,7 +78,6 @@ public class CartPaymentActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         int amount = 0;
         amount = getIntent().getIntExtra("cartTotalPrice",0);
         Final_cart_order = getIntent().getStringExtra("cartData");
@@ -295,6 +297,36 @@ public class CartPaymentActivity extends AppCompatActivity {
                                             }
                                         });
                             }
+                        }
+                    }
+                });
+    }
+    private void fetchCurrentCoins() {
+        String userId = auth.getCurrentUser().getUid();
+        firestore.collection("CurrentUser").document(userId)
+                .collection("Coins").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("Firestore", "Task successful");
+                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                                if (doc.exists()) {
+                                    Log.d("Firestore", "Document exists");
+                                    coins = doc.getLong("amount").intValue();
+                                    Log.d("Firestore", "Coins value: " + coins);
+                                    // Update coinsview here
+                                    coinsview.setText(String.valueOf(-coins));
+                                    // Update total amount
+                                    totalamount = subtotal + dis + ship - coins;
+                                    cartpayconv = String.valueOf(totalamount);
+                                    totalcartpay = cartpayconv + "00";
+                                    total.setText("Rs " + totalamount);
+                                } else {
+                                    Log.d("Firestore", "No such document");
+                                }
+                            }
+                        } else {
+                            Log.d("Firestore", "get failed with ", task.getException());
                         }
                     }
                 });
