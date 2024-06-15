@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.princeecommerceapp.R;
 import com.example.princeecommerceapp.models.AddressModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -254,6 +255,7 @@ public class PaymentActivity extends AppCompatActivity {
         if (paymentSheetResult instanceof PaymentSheetResult.Completed){
             Toast.makeText(this, "Payment Success", Toast.LENGTH_SHORT).show();
             placeOrder();
+            resetCoinsToZero();
         }
     }
 
@@ -307,4 +309,39 @@ public class PaymentActivity extends AppCompatActivity {
                 });
     }
 
+    private void resetCoinsToZero() {
+        String userId = auth.getCurrentUser().getUid();
+        firestore.collection("CurrentUser").document(userId)
+                .collection("Coins").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                                if (doc.exists()) {
+                                    // Update the amount to 0
+                                    DocumentReference docRef = doc.getReference();
+                                    docRef.update("amount", 0)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("Firestore", "Coins successfully reset to 0");
+                                                    coinsview.setText("0");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w("Firestore", "Error updating document", e);
+                                                }
+                                            });
+                                } else {
+                                    Log.d("Firestore", "No such document");
+                                }
+                            }
+                        } else {
+                            Log.d("Firestore", "get failed with ", task.getException());
+                        }
+                    }
+                });
+    }
 }

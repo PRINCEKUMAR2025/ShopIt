@@ -249,26 +249,48 @@ public class MyProfileActivty extends AppCompatActivity {
         totalcoins += pervid;
         videoAd.setText(String.valueOf(totalcoins));
 
-        // Reference to the single document for coins (assuming there's only one document)
+        // Reference to the Coins collection
         firestore.collection("CurrentUser").document(userId).collection("Coins")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
-                                // Update the 'amount' field of the existing document
-                                doc.getReference().update("amount", totalcoins)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (!querySnapshot.isEmpty()) {
+                                // Update the first document in the collection
+                                for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                                    doc.getReference().update("amount", totalcoins)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("Firestore", "DocumentSnapshot successfully updated!");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w("Firestore", "Error updating document", e);
+                                                }
+                                            });
+                                    break; // Update only the first document
+                                }
+                            } else {
+                                // No documents found, create a new document
+                                Map<String, Object> coinData = new HashMap<>();
+                                coinData.put("amount", totalcoins);
+                                firestore.collection("CurrentUser").document(userId).collection("Coins")
+                                        .add(coinData)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d("Firestore", "DocumentSnapshot successfully updated!");
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.d("Firestore", "DocumentSnapshot successfully created!");
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.w("Firestore", "Error updating document", e);
+                                                Log.w("Firestore", "Error creating document", e);
                                             }
                                         });
                             }
@@ -278,5 +300,6 @@ public class MyProfileActivty extends AppCompatActivity {
                     }
                 });
     }
+
 
 }

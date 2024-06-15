@@ -240,10 +240,9 @@ public class CartPaymentActivity extends AppCompatActivity {
             Toast.makeText(this, "Payment Success", Toast.LENGTH_SHORT).show();
             placeCartOrder();
             deleteFromCart();
+            resetCoinsToZero();
         }
     }
-
-
 
     void placeCartOrder(){
         Map<String, String> map = new HashMap<>();
@@ -321,6 +320,41 @@ public class CartPaymentActivity extends AppCompatActivity {
                                     cartpayconv = String.valueOf(totalamount);
                                     totalcartpay = cartpayconv + "00";
                                     total.setText("Rs " + totalamount);
+                                } else {
+                                    Log.d("Firestore", "No such document");
+                                }
+                            }
+                        } else {
+                            Log.d("Firestore", "get failed with ", task.getException());
+                        }
+                    }
+                });
+    }
+    private void resetCoinsToZero() {
+        String userId = auth.getCurrentUser().getUid();
+        firestore.collection("CurrentUser").document(userId)
+                .collection("Coins").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                                if (doc.exists()) {
+                                    // Update the amount to 0
+                                    DocumentReference docRef = doc.getReference();
+                                    docRef.update("amount", 0)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("Firestore", "Coins successfully reset to 0");
+                                                    coinsview.setText("0");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w("Firestore", "Error updating document", e);
+                                                }
+                                            });
                                 } else {
                                     Log.d("Firestore", "No such document");
                                 }

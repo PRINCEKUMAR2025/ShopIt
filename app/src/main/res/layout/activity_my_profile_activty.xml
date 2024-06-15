@@ -32,7 +32,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginTop="7dp"
         android:orientation="horizontal"
@@ -50,7 +50,7 @@
 
         <TextView
             android:id="@+id/videoAd"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:clickable="true"
             android:text="0"
