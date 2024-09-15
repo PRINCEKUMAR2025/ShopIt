@@ -33,7 +33,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_height="40dp"
         android:layout_marginTop="7dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/Lottie"
@@ -43,22 +43,41 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_toolbar"
         app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="20dp"
-            android:background="@drawable/coin" />
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="40dp">
 
-        <TextView
-            android:id="@+id/videoAd"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:clickable="true"
-            android:text="0"
-            android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            <!-- Button with background -->
+            <Button
+                android:id="@+id/videoAd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:backgroundTint="#FFF1E6"
+                android:text=""/>
+
+            <!-- ImageView and TextView placed over the button -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </FrameLayout>
+
 
     </LinearLayout>
+
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/Lottie"
@@ -246,9 +265,10 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/up_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/up_phone"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

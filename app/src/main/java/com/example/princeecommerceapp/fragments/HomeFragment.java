@@ -3,6 +3,7 @@ package com.example.princeecommerceapp.fragments;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -64,6 +66,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View root =  inflater.inflate(R.layout.fragment_home, container, false);
 

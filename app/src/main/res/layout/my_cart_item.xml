@@ -1,205 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="5dp"
-    android:elevation="4dp"
-    android:layout_margin="5dp">
+    app:cardCornerRadius="8dp"
+    android:elevation="6dp"
+    android:layout_margin="8dp">
 
     <LinearLayout
-        android:padding="7dp"
-        android:background="#D1D9E0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="#faf0e6">
 
+        <!-- Date and Lottie Animation -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:gravity="center_vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/amethysta"
+                android:text="Current Date:"
                 android:textColor="@color/black"
-                android:text="Current Date: "
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/current_date"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/amethysta"
-                android:text="Current Date: "
+                android:text="--/--/----"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/Lottie"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerInParent="true"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:elevation="5dp"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/shopping" />
-
         </LinearLayout>
 
+        <!-- Time Information -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="Current Time:"
                 android:textColor="@color/black"
-                android:fontFamily="@font/amethysta"
-                android:text="Current Time: "
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/current_time"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="--:--"
                 android:textColor="@color/black"
-                android:fontFamily="@font/amethysta"
-                android:text="Current Time: "
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
+        <!-- Product Information -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="Product Name:"
                 android:textColor="@color/black"
-                android:fontFamily="@font/amethysta"
-                android:text="Product Name: "
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/product_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="Sample Product"
                 android:textColor="@color/black"
-                android:fontFamily="@font/amethysta"
-                android:text="Current Date: "
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
+        <!-- Price Information -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/amethysta"
-                android:textColor="@color/black"
                 android:text="Product Price:"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/product_price"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="Rs 0.00"
                 android:textColor="@color/black"
-                android:fontFamily="@font/amethysta"
-                android:text="Current Date: "
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
+        <!-- Quantity Information -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/amethysta"
+                android:text="Total Quantity:"
                 android:textColor="@color/black"
-                android:text="Total Quantity "
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/total_quantity"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/amethysta"
+                android:text="0"
                 android:textColor="@color/black"
-                android:text="Total Quantity"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-
-
         </LinearLayout>
 
+        <!-- Total Price Information -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/amethysta"
-                android:text="Total Price : Rs"
+                android:text="Total Price: Rs"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/total_price"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/amethysta"
+                android:text="0.00"
                 android:textColor="@color/black"
-                android:text="Total price "
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-
         </LinearLayout>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

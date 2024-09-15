@@ -20,6 +20,10 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8361032125437158~1616640200" />
 
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+
         <activity
             android:name=".activities.PrivacyPolicyActivity"
             android:exported="false" />

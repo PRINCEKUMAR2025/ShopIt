@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -65,6 +66,7 @@ public class PaymentActivity extends AppCompatActivity {
     String customerID;
     String EmphericalKey;
     String ClientSecret;
+    MediaPlayer player;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -253,6 +255,8 @@ public class PaymentActivity extends AppCompatActivity {
             Toast.makeText(this, ((PaymentSheetResult.Failed)paymentSheetResult).getError().getMessage(),Toast.LENGTH_SHORT).show();
         }
         if (paymentSheetResult instanceof PaymentSheetResult.Completed){
+            player = MediaPlayer.create(PaymentActivity.this,R.raw.paysound);
+            player.start();
             Toast.makeText(this, "Payment Success", Toast.LENGTH_SHORT).show();
             placeOrder();
             resetCoinsToZero();

@@ -53,10 +53,10 @@ public class MyProfileActivty extends AppCompatActivity {
     Toolbar toolbar;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
-    TextView name,email,videoAd;
+    TextView name,email;
     String UserAddress;
     EditText newname, newaddress, newcity, newpostalCode, newphoneNumber;
-    Button update;
+    Button update,videoAd;
     RecyclerView recyclerView;
     private List<ProfileAddressModel> profileModelList;
     private ProfileAddressAdapter addressAdapter;
