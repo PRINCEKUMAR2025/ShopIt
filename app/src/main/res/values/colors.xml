@@ -30,4 +30,8 @@
     <color name="received_message_background">#4D4C7D</color>
     <color name="grey">#808080</color>
     <color name="yellow">#FFFF00</color>
+        <color name="your_dialog_background_color">#FFFFFF</color> <!-- Example: White -->
+        <color name="your_text_color">#000000</color> <!-- Example: Black -->
+        <color name="your_button_background_color">#FF6200EE</color> <!-- Example: Purple -->
+        <color name="your_button_text_color">#FFFFFF</color> <!-- Example: White -->
 </resources>

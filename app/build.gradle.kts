@@ -90,4 +90,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-inappmessaging-display")
     implementation("com.google.android.gms:play-services-ads:23.1.0")
+
+
+    implementation("com.google.android.gms:play-services-wallet:18.1.0")
 }

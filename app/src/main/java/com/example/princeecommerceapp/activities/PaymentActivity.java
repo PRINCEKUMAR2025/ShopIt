@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +68,7 @@ public class PaymentActivity extends AppCompatActivity {
     String EmphericalKey;
     String ClientSecret;
     MediaPlayer player;
+    ImageButton gpay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +79,7 @@ public class PaymentActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.payment_toolbar);
         payBtn = findViewById(R.id.pay_btn);
         coinsview=findViewById(R.id.coinsview);
+        gpay=findViewById(R.id.pay_gpay);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
