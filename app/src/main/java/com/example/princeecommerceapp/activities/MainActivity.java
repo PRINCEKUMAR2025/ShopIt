@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 if (item.getItemId()==R.id.chatbot){
-                    Toast.makeText(MainActivity.this, "Under Development..", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(MainActivity.this,ChatBot.class);
                     startActivity(intent);
                 }
