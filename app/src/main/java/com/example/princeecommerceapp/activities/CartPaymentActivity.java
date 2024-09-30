@@ -248,20 +248,24 @@ public class CartPaymentActivity extends AppCompatActivity {
         }
     }
 
-    void placeCartOrder(){
+    void placeCartOrder() {
         Map<String, String> map = new HashMap<>();
-        map.put("userOrder",Final_cart_order);
+        map.put("userOrder", Final_cart_order);
 
+        // Create the parent document if it doesn't exist
+        firestore.collection("Orders").document(auth.getCurrentUser().getUid())
+                .set(new HashMap<>()); // This creates the document with an empty map
+
+        // Now add the order to the NormalOrder subcollection
         firestore.collection("Orders").document(auth.getCurrentUser().getUid())
                 .collection("NormalOrder").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(CartPaymentActivity.this, "Order Placed Successfully..", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(CartPaymentActivity.this, OrderPlacedActivity.class));
                             finish();
-                        }
-                        else {
+                        } else {
                             Toast.makeText(CartPaymentActivity.this, "Order Failed..", Toast.LENGTH_SHORT).show();
                         }
                     }
