@@ -29,16 +29,18 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
-    @Override
     public void onBindViewHolder(@NonNull OrdersAdapter.ViewHolder holder, int position) {
         OrdersModel order = ordersModelList.get(position);
         holder.userNormalOrder.setText(order.getUserOrder());
 
-        // Set the long click listener
+        // Set the order status
+        holder.orderStatus.setText("Status: " + order.getOrderStatus());
+
+        // Set the long click listener for cancellation
         holder.itemView.setOnLongClickListener(v -> {
             if (longClickListener != null) {
                 longClickListener.onItemLongClick(order);
-                return true; // Return true to indicate the event was handled
+                return true;
             }
             return false;
         });
@@ -59,10 +61,12 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView userNormalOrder;
+        TextView orderStatus; // New field
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             userNormalOrder = itemView.findViewById(R.id.orders_add);
+            orderStatus = itemView.findViewById(R.id.order_status); // Initialize status TextView
         }
     }
 }

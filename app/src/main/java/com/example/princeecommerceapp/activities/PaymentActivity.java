@@ -357,8 +357,10 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     void placeOrder() {
+        // Create a map to hold the order data
         Map<String, String> map = new HashMap<>();
         map.put("userOrder", final_Order);
+        map.put("orderStatus", "Placed"); // Add the orderStatus field and set it to "Placed"
 
         // Create the parent document if it doesn't exist
         firestore.collection("Orders").document(auth.getCurrentUser().getUid())
@@ -379,6 +381,7 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     private void fetchCurrentCoins() {
         String userId = auth.getCurrentUser().getUid();

@@ -74,25 +74,59 @@ public class OrdersActivity extends AppCompatActivity {
     }
 
     private void fetchOrders() {
-        firestore.collection("Orders").document(auth.getCurrentUser().getUid())
-                .collection("NormalOrder").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        // Fetch the user's orders from Firestore
+        firestore.collection("Orders")
+                .document(auth.getCurrentUser().getUid())
+                .collection("NormalOrder")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            // Clear the previous list of orders
+                            orderModelList.clear();
+
+                            // Iterate through the documents and map them to OrdersModel
                             for (DocumentSnapshot doc : task.getResult().getDocuments()) {
                                 OrdersModel orderModel = doc.toObject(OrdersModel.class);
+
                                 if (orderModel != null) {
-                                    orderModel.setOrderId(doc.getId()); // Set the document ID as orderId
+                                    // Set the orderId
+                                    orderModel.setOrderId(doc.getId());
+
+                                    // Fetch the 'userOrder' field
+                                    String userOrder = doc.getString("userOrder");
+                                    if (userOrder != null) {
+                                        orderModel.setUserOrder(userOrder);
+                                    } else {
+                                        // If 'userOrder' is missing, set a default value
+                                        orderModel.setUserOrder("No Order Details");
+                                    }
+
+                                    // Fetch the 'orderStatus' field
+                                    String orderStatus = doc.getString("orderStatus");
+                                    if (orderStatus != null) {
+                                        orderModel.setOrderStatus(orderStatus);
+                                    } else {
+                                        // If 'orderStatus' is missing, set a default value
+                                        orderModel.setOrderStatus("Placed");
+                                    }
+
+                                    // Add the order to the list
                                     orderModelList.add(orderModel);
                                 }
                             }
-                            ordersAdapter.notifyDataSetChanged(); // Notify adapter after adding all orders
+
+                            // Notify the adapter that the data has changed
+                            ordersAdapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(OrdersActivity.this, "You have no orders", Toast.LENGTH_SHORT).show();
+                            // If the fetch fails, show a message to the user
+                            Toast.makeText(OrdersActivity.this, "Failed to fetch orders", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
 
     private void showCancelConfirmationDialog(OrdersModel orderModel) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

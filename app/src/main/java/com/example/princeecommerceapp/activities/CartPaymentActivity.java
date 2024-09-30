@@ -249,8 +249,10 @@ public class CartPaymentActivity extends AppCompatActivity {
     }
 
     void placeCartOrder() {
+        // Create a map to hold the order data
         Map<String, String> map = new HashMap<>();
         map.put("userOrder", Final_cart_order);
+        map.put("orderStatus", "Placed"); // Add the orderStatus field and set it to "Placed"
 
         // Create the parent document if it doesn't exist
         firestore.collection("Orders").document(auth.getCurrentUser().getUid())

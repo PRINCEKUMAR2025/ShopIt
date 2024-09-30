@@ -2,7 +2,8 @@ package com.example.princeecommerceapp.models;
 
 public class OrdersModel {
     private String userOrder; // Field to store order details
-    private String orderId; // Field to store the document ID
+    private String orderId;
+    private String orderStatus;// Field to store the document ID
 
     public OrdersModel() {
         // Default constructor required for calls to DataSnapshot.getValue(OrdersModel.class)
@@ -22,5 +23,13 @@ public class OrdersModel {
 
     public void setOrderId(String orderId) { // Setter for orderId
         this.orderId = orderId;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }
