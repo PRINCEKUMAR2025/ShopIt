@@ -7,6 +7,10 @@ android {
     namespace = "com.example.princeecommerceapp"
     compileSdk = 34
 
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+    }
+
     defaultConfig {
         applicationId = "com.example.princeecommerceapp"
         minSdk = 24
@@ -93,6 +97,6 @@ dependencies {
 
 
     implementation("com.google.android.gms:play-services-wallet:18.1.0")
-    implementation("com.google.firebase:firebase-messaging:24.0.1")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.19.0")
 
 }

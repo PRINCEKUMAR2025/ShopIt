@@ -177,7 +177,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
-        android:text="Check Out"
+        android:text="Pay using Card"
         android:textStyle="bold"
         android:backgroundTint="@color/black"
         android:textColorHint="@color/white"

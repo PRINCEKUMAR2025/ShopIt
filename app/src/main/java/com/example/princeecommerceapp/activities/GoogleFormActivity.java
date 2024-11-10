@@ -3,11 +3,13 @@ package com.example.princeecommerceapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ public class GoogleFormActivity extends AppCompatActivity {
     EditText edtName, edtPhone;
     ProgressBar progressDialog;
     Button btn;
+    ImageButton community;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class GoogleFormActivity extends AppCompatActivity {
         edtPhone = findViewById(R.id.edt_Phone);
         progressDialog = findViewById(R.id.progress_Bar);
         btn=findViewById(R.id.btnSubmit);
+        community=findViewById(R.id.community);
 
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -48,6 +52,13 @@ public class GoogleFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 postData(edtName.getText().toString().trim(),edtPhone.getText().toString().trim());
+            }
+        });
+
+        community.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(GoogleFormActivity.this, ChatActivity.class));
             }
         });
     }

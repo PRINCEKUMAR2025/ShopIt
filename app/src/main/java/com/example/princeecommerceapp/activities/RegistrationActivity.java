@@ -23,12 +23,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
-    EditText name,email,password;
+    EditText name, email, password;
     ProgressBar progress;
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
@@ -36,43 +37,54 @@ public class RegistrationActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     TextView privacypolicy;
 
+    String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-//        getSupportActionBar().hide();
+        // Get FCM Token
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(this, "Fetching FCM token failed: " + task.getException(), Toast.LENGTH_SHORT).show();
+                        Log.e("FCM", "Fetching FCM token failed: " + task.getException());
+                        return;
+                    }
+                    // Get the FCM registration token
+                    token = task.getResult();
+                    Log.e("FCM", "FCM Token: " + token);
+                });
 
-        auth=FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        if (auth.getCurrentUser() !=null){
+        if (auth.getCurrentUser() != null) {
             startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
             finish();
         }
-        name=findViewById(R.id.name);
-        email=findViewById(R.id.email);
-        password=findViewById(R.id.password);
-        progress=findViewById(R.id.progress);
-        privacypolicy=findViewById(R.id.policy_tv);
 
-        privacypolicy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(RegistrationActivity.this,PrivacyPolicyActivity.class);
-                startActivity(intent);
-            }
+        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        progress = findViewById(R.id.progress);
+        privacypolicy = findViewById(R.id.policy_tv);
+
+        privacypolicy.setOnClickListener(view -> {
+            Intent intent = new Intent(RegistrationActivity.this, PrivacyPolicyActivity.class);
+            startActivity(intent);
         });
 
-        sharedPreferences = getSharedPreferences("onBoardingScreen",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
 
-        boolean isFirstTime  =  sharedPreferences.getBoolean("firstTime",true);
-        if (isFirstTime){
+        boolean isFirstTime = sharedPreferences.getBoolean("firstTime", true);
+        if (isFirstTime) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("firstTime",false);
+            editor.putBoolean("firstTime", false);
             editor.commit();
 
-            Intent intent = new Intent(RegistrationActivity.this,OnBoardingActivity.class);
+            Intent intent = new Intent(RegistrationActivity.this, OnBoardingActivity.class);
             startActivity(intent);
             finish();
         }
@@ -83,34 +95,43 @@ public class RegistrationActivity extends AppCompatActivity {
         String userName = name.getText().toString();
         String userEmail = email.getText().toString();
         String userPassword = password.getText().toString();
-        if (TextUtils.isEmpty(userName)){
-                name.setError("Name Required");
-                return;
+
+        if (TextUtils.isEmpty(userName)) {
+            name.setError("Name Required");
+            return;
         }
-        if (TextUtils.isEmpty(userEmail)){
+
+        if (TextUtils.isEmpty(userEmail)) {
             email.setError("Email Required");
             return;
         }
-        if (TextUtils.isEmpty(userPassword)){
+
+        if (TextUtils.isEmpty(userPassword)) {
             password.setError("Set your password");
-        }
-        if (userPassword.length()<6){
-            Toast.makeText(this, "Password too short, enter atleast 6 character..", Toast.LENGTH_SHORT).show();
             return;
         }
-        auth.createUserWithEmailAndPassword(userEmail,userPassword).
-                addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>() {
+
+        if (userPassword.length() < 6) {
+            Toast.makeText(this, "Password too short, enter at least 6 characters.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        auth.createUserWithEmailAndPassword(userEmail, userPassword)
+                .addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progress.setVisibility(View.INVISIBLE);
-                        if (task.isSuccessful()){
+
+                        if (task.isSuccessful()) {
                             String userId = auth.getCurrentUser().getUid();
-                            Map<String, Object> totalcoins = new HashMap<>();
-                            totalcoins.put("amount", 10);
+
+                            // Add coins data
+                            Map<String, Object> totalCoins = new HashMap<>();
+                            totalCoins.put("amount", 10);
 
                             firestore.collection("CurrentUser").document(userId)
                                     .collection("Coins")
-                                    .add(totalcoins)
+                                    .add(totalCoins)
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
                                         public void onSuccess(DocumentReference documentReference) {
@@ -124,18 +145,46 @@ public class RegistrationActivity extends AppCompatActivity {
                                         }
                                     });
 
+                            // Set empty data for orders
+                            firestore.collection("Orders").document(userId)
+                                    .set(new HashMap<>());
+
+                            // Save FCM token to Firestore
+                            firestore.collection("Orders").document(userId)
+                                    .collection("FCM_Tokens")
+                                    .add(createTokenMap(token)) // Use the helper method to add token
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Log.d("FCM", "FCM token added with ID: " + documentReference.getId());
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("FCM", "Error adding FCM token", e);
+                                        }
+                                    });
+
+                            // Success message and redirect
                             Toast.makeText(RegistrationActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                             finish();
-                        }else {
-                            Toast.makeText(RegistrationActivity.this, "Registration Failed: "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(RegistrationActivity.this, "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
 
+    // Helper method to create a map for FCM token
+    private Map<String, Object> createTokenMap(String token) {
+        Map<String, Object> tokenMap = new HashMap<>();
+        tokenMap.put("fcmToken", token); // Key can be anything you want
+        return tokenMap;
     }
 
     public void signin(View view) {
-        startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
+        startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
     }
 }

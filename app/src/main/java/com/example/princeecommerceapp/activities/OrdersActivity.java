@@ -36,12 +36,15 @@ public class OrdersActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
     Toolbar toolbar;
 
+    TextView noOrdersText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders);
 
         toolbar = findViewById(R.id.payment_toolbar);
+        noOrdersText=findViewById(R.id.no_orders_text);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -91,36 +94,25 @@ public class OrdersActivity extends AppCompatActivity {
                                 OrdersModel orderModel = doc.toObject(OrdersModel.class);
 
                                 if (orderModel != null) {
-                                    // Set the orderId
                                     orderModel.setOrderId(doc.getId());
-
-                                    // Fetch the 'userOrder' field
-                                    String userOrder = doc.getString("userOrder");
-                                    if (userOrder != null) {
-                                        orderModel.setUserOrder(userOrder);
-                                    } else {
-                                        // If 'userOrder' is missing, set a default value
-                                        orderModel.setUserOrder("No Order Details");
-                                    }
-
-                                    // Fetch the 'orderStatus' field
-                                    String orderStatus = doc.getString("orderStatus");
-                                    if (orderStatus != null) {
-                                        orderModel.setOrderStatus(orderStatus);
-                                    } else {
-                                        // If 'orderStatus' is missing, set a default value
-                                        orderModel.setOrderStatus("Placed");
-                                    }
-
-                                    // Add the order to the list
+                                    orderModel.setUserOrder(doc.getString("userOrder"));
+                                    orderModel.setOrderStatus(doc.getString("orderStatus"));
                                     orderModelList.add(orderModel);
                                 }
                             }
 
                             // Notify the adapter that the data has changed
                             ordersAdapter.notifyDataSetChanged();
+
+                            // Show or hide the "No Orders" message
+                            if (orderModelList.isEmpty()) {
+                                noOrdersText.setVisibility(View.VISIBLE);  // Show "No Orders" text
+                                recyclerView.setVisibility(View.GONE);      // Hide RecyclerView
+                            } else {
+                                noOrdersText.setVisibility(View.GONE);     // Hide "No Orders" text
+                                recyclerView.setVisibility(View.VISIBLE);  // Show RecyclerView
+                            }
                         } else {
-                            // If the fetch fails, show a message to the user
                             Toast.makeText(OrdersActivity.this, "Failed to fetch orders", Toast.LENGTH_SHORT).show();
                         }
                     }
