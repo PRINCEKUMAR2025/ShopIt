@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class OrdersActivity extends AppCompatActivity {
@@ -158,23 +159,42 @@ public class OrdersActivity extends AppCompatActivity {
             return;
         }
 
-        // Get the document reference for the order to be deleted
+        // Get Firestore references
+        String userId = auth.getCurrentUser().getUid();
+
+        // Ensure parent document exists
+        firestore.collection("CancelledOrders").document(userId).set(new HashMap<>());
+
         DocumentReference orderRef = firestore.collection("Orders")
-                .document(auth.getCurrentUser().getUid())
+                .document(userId)
                 .collection("NormalOrder")
                 .document(orderModel.getOrderId());
 
-        orderRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    orderModelList.remove(orderModel); // Remove from local list
-                    ordersAdapter.notifyDataSetChanged(); // Notify adapter
-                    Toast.makeText(OrdersActivity.this, "Order canceled successfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(OrdersActivity.this, "Failed to cancel order", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        DocumentReference cancelledOrderRef = firestore.collection("CancelledOrders")
+                .document(userId)
+                .collection("CancelledOrdersByUser")
+                .document(orderModel.getOrderId());
+
+        // Write canceled order to CancelledOrders collection
+        cancelledOrderRef.set(orderModel)
+                .addOnSuccessListener(aVoid -> {
+                    // Delete the order from NormalOrder after successful write
+                    orderRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                orderModelList.remove(orderModel); // Remove from local list
+                                ordersAdapter.notifyDataSetChanged(); // Notify adapter
+                                Toast.makeText(OrdersActivity.this, "Order canceled successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(OrdersActivity.this, "Failed to cancel order", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(OrdersActivity.this, "Failed to move order to canceled list", Toast.LENGTH_SHORT).show();
+                });
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.princeecommerceapp.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +14,10 @@ import com.example.princeecommerceapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,12 +25,13 @@ import java.util.Map;
 public class ChatActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth auth;
-    private String chatId = "chat1"; // Chat ID
+    String chatId; // Chat ID
     private String userId; // User ID
 
     private LinearLayout chatLayout;
     private EditText messageInput;
     private Button sendButton;
+    private Button closeButton; // Add close button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +42,13 @@ public class ChatActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
+        chatId= auth.getCurrentUser().getEmail().toString();
+
         // Get the current user's ID after initializing auth
         if (auth.getCurrentUser() != null) {
             userId = auth.getCurrentUser().getEmail(); // User ID
         } else {
             // Handle the case where the user is not logged in
-            // You might want to show a message or redirect to login
             finish(); // Close the activity if user is not logged in
             return;
         }
@@ -52,9 +57,13 @@ public class ChatActivity extends AppCompatActivity {
         chatLayout = findViewById(R.id.chatLayout);
         messageInput = findViewById(R.id.messageInput);
         sendButton = findViewById(R.id.sendButton);
+        closeButton = findViewById(R.id.closeButton); // Initialize close button
 
         // Set up the send button click listener
         sendButton.setOnClickListener(v -> sendMessage());
+
+        // Set up the close button click listener
+        closeButton.setOnClickListener(v -> closeChat());
 
         // Load messages from Firestore
         loadMessages();
@@ -84,8 +93,19 @@ public class ChatActivity extends AppCompatActivity {
             message.put("text", messageText);
             message.put("timestamp", System.currentTimeMillis());
 
-            db.collection("chats").document(chatId).collection("messages").add(message);
-            messageInput.setText(""); // Clear the input field after sending
+            // Create the parent document if it doesn't exist
+            db.collection("chats").document(chatId)
+                    .set(new HashMap<>(), SetOptions.merge()) // Create or merge the parent document
+                    .addOnSuccessListener(aVoid -> {
+                        // Add the message to the messages subcollection
+                        db.collection("chats").document(chatId).collection("messages")
+                                .add(message)
+                                .addOnSuccessListener(documentReference -> {
+                                    messageInput.setText(""); // Clear the input field after sending
+                                })
+                                .addOnFailureListener(e -> Log.e("ChatActivity", "Error sending message", e));
+                    })
+                    .addOnFailureListener(e -> Log.e("ChatActivity", "Error creating parent document", e));
         }
     }
 
@@ -101,5 +121,26 @@ public class ChatActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT
         ));
         chatLayout.addView(messageView);
+    }
+
+    private void closeChat() {
+        // Optionally delete chat history from Firestore
+        deleteChatHistory();
+        finish(); // Close the activity
+    }
+
+    private void deleteChatHistory() {
+        CollectionReference messagesRef = db.collection("chats").document(chatId).collection("messages");
+        messagesRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                    messagesRef.document(document.getId()).delete(); // Delete each message
+                }
+                // Delete the parent document
+                db.collection("chats").document(chatId).delete()
+                        .addOnSuccessListener(aVoid -> Log.d("ChatActivity", "Parent document deleted"))
+                        .addOnFailureListener(e -> Log.e("ChatActivity", "Error deleting parent document", e));
+            }
+        });
     }
 }
