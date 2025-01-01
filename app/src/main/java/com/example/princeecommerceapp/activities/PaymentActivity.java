@@ -236,7 +236,7 @@ public class PaymentActivity extends AppCompatActivity {
         try {
             JSONObject transactionInfo = new JSONObject()
                     .put("totalPriceStatus", "FINAL")
-                    .put("totalPrice", totalamounttopay)
+                    .put("totalPrice", totalpay)
                     .put("currencyCode", "INR");
 
             JSONObject merchantInfo = new JSONObject()
@@ -281,7 +281,11 @@ public class PaymentActivity extends AppCompatActivity {
                     if (paymentData != null) {
                         String paymentInfo = paymentData.toJson();
                         Log.d("Payment Success", paymentInfo);
-                        Toast.makeText(this, "Payment Successful!", Toast.LENGTH_SHORT).show();
+                        player = MediaPlayer.create(PaymentActivity.this, R.raw.paysound);
+                        player.start();
+                        Toast.makeText(this, "Payment Success", Toast.LENGTH_SHORT).show();
+                        placeOrder();
+                        resetCoinsToZero();
                     }
                     break;
                 case RESULT_CANCELED:
