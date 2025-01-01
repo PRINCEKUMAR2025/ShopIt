@@ -23,11 +23,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.princeecommerceapp.R;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.wallet.AutoResolveHelper;
+import com.google.android.gms.wallet.IsReadyToPayRequest;
 import com.google.android.gms.wallet.PaymentData;
 import com.google.android.gms.wallet.PaymentDataRequest;
 import com.google.android.gms.wallet.PaymentsClient;
@@ -42,6 +44,7 @@ import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import com.stripe.android.paymentsheet.PaymentSheetResult;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,6 +95,13 @@ public class PaymentActivity extends AppCompatActivity {
                 .setEnvironment(WalletConstants.ENVIRONMENT_TEST) // Use ENVIRONMENT_PRODUCTION for live
                 .build();
         paymentsClient = Wallet.getPaymentsClient(this, walletOptions);
+
+
+        initGooglePayClient();
+
+        // Check Google Pay Availability
+        checkGooglePayAvailability();
+
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -182,10 +192,8 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void requestPayment() {
-        // Create a PaymentDataRequest object
         PaymentDataRequest request = createPaymentDataRequest();
         if (request != null) {
-            // Start the Google Pay payment flow
             AutoResolveHelper.resolveTask(
                     paymentsClient.loadPaymentData(request),
                     this,
@@ -193,46 +201,104 @@ public class PaymentActivity extends AppCompatActivity {
         }
     }
 
-    private PaymentDataRequest createPaymentDataRequest() {
-        // Create a PaymentDataRequest object
-        return PaymentDataRequest.fromJson("{\n" +
+    private void initGooglePayClient() {
+        Wallet.WalletOptions walletOptions = new Wallet.WalletOptions.Builder()
+                .setEnvironment(WalletConstants.ENVIRONMENT_TEST) // Change to PRODUCTION for live
+                .build();
+        paymentsClient = Wallet.getPaymentsClient(this, walletOptions);
+    }
+
+    private void checkGooglePayAvailability() {
+        IsReadyToPayRequest request = IsReadyToPayRequest.fromJson("{\n" +
                 "  \"apiVersion\": 2,\n" +
                 "  \"apiVersionMinor\": 0,\n" +
-                "  \"merchantInfo\": {\n" +
-                "    \"merchantId\": \"1906-0514-3188\",\n" +
-                "    \"merchantName\": \"Prince\"\n" +
-                "  },\n" +
-                "  \"transactionInfo\": {\n" +
-                "    \"totalPriceStatus\": \"FINAL\",\n" +
-                "    \"totalPrice\": \"" + totalamounttopay + "\",\n" +
-                "    \"currencyCode\": \"INR\",\n" +
-                "    \"countryCode\": \"IN\"\n" +
-                "  },\n" +
-                "  \"cardRequirements\": {\n" +
-                "    \"allowedCardNetworks\": [\"VISA\", \"MASTERCARD\"],\n" +
-                "    \"billingAddressRequired\": true,\n" +
-                "    \"billingAddressParameters\": {\n" +
-                "      \"format\": \"FULL\"\n" +
+                "  \"allowedPaymentMethods\": [{\n" +
+                "    \"type\": \"CARD\",\n" +
+                "    \"parameters\": {\n" +
+                "      \"allowedAuthMethods\": [\"PAN_ONLY\", \"CRYPTOGRAM_3DS\"],\n" +
+                "      \"allowedCardNetworks\": [\"VISA\", \"MASTERCARD\"]\n" +
                 "    }\n" +
-                "  }\n" +
+                "  }]\n" +
                 "}");
+
+        Task<Boolean> task = paymentsClient.isReadyToPay(request);
+        task.addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                gpay.setVisibility(View.VISIBLE);
+            } else {
+                gpay.setVisibility(View.GONE);
+                Log.e("GooglePay", "Google Pay not available");
+            }
+        });
+    }
+
+    private PaymentDataRequest createPaymentDataRequest() {
+        try {
+            JSONObject transactionInfo = new JSONObject()
+                    .put("totalPriceStatus", "FINAL")
+                    .put("totalPrice", totalamounttopay)
+                    .put("currencyCode", "INR");
+
+            JSONObject merchantInfo = new JSONObject()
+                    .put("merchantName", "Prince");
+
+            JSONObject paymentMethod = new JSONObject()
+                    .put("type", "CARD")
+                    .put("parameters", new JSONObject()
+                            .put("allowedAuthMethods", new JSONArray()
+                                    .put("PAN_ONLY")
+                                    .put("CRYPTOGRAM_3DS"))
+                            .put("allowedCardNetworks", new JSONArray()
+                                    .put("VISA")
+                                    .put("MASTERCARD")))
+                    .put("tokenizationSpecification", new JSONObject()
+                            .put("type", "PAYMENT_GATEWAY")
+                            .put("parameters", new JSONObject()
+                                    .put("gateway", "example")
+                                    .put("gatewayMerchantId", "BCR2DN4T7XU4JTLR")));
+
+            JSONObject paymentDataRequest = new JSONObject()
+                    .put("apiVersion", 2)
+                    .put("apiVersionMinor", 0)
+                    .put("merchantInfo", merchantInfo)
+                    .put("allowedPaymentMethods", new JSONArray().put(paymentMethod))
+                    .put("transactionInfo", transactionInfo);
+
+            return PaymentDataRequest.fromJson(paymentDataRequest.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_PAYMENT) {
-            if (resultCode == RESULT_OK && data != null) {
-                // Payment was successful
-                PaymentData paymentData = PaymentData.getFromIntent(data);
-                handlePaymentSuccess(paymentData);
-            } else {
-                // Payment failed or was canceled
-                Log.e("PaymentActivity", "Payment failed: " + resultCode);
-                Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
+            switch (resultCode) {
+                case RESULT_OK:
+                    PaymentData paymentData = PaymentData.getFromIntent(data);
+                    if (paymentData != null) {
+                        String paymentInfo = paymentData.toJson();
+                        Log.d("Payment Success", paymentInfo);
+                        Toast.makeText(this, "Payment Successful!", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case RESULT_CANCELED:
+                    Log.e("PaymentActivity", "Payment canceled by user.");
+                    Toast.makeText(this, "Payment canceled!", Toast.LENGTH_SHORT).show();
+                    break;
+                case AutoResolveHelper.RESULT_ERROR:
+                    Status status = AutoResolveHelper.getStatusFromIntent(data);
+                    Log.e("PaymentActivity", "Error Code: " + status.getStatusCode());
+                    Toast.makeText(this, "Payment Failed!", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    Log.e("PaymentActivity", "Unexpected result code: " + resultCode);
             }
         }
     }
+
 
     private void handlePaymentSuccess(PaymentData paymentData) {
         if (paymentData != null) {
