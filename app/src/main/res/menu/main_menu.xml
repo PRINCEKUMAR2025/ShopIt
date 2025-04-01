@@ -4,6 +4,11 @@
 
 
     <item
+        android:id="@+id/menu_KIWI"
+        android:title="KIWI"
+        android:icon="@drawable/kiwi"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/menu_videos"
         android:title="Logout"
         android:icon="@drawable/like"
@@ -13,6 +18,7 @@
         android:title="Logout"
         android:icon="@drawable/ic_baseline_loginout"
         app:showAsAction="always"/>
+
 
 
 

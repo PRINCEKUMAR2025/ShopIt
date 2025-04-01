@@ -125,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
         if (id==R.id.menu_videos){
             startActivity(new Intent(MainActivity.this,Showvideo.class));
         }
+        if (id==R.id.menu_KIWI){
+            startActivity(new Intent(MainActivity.this, KiwiActivity.class));
+        }
         return true;
     }
 

@@ -99,4 +99,18 @@ dependencies {
     implementation("com.google.android.gms:play-services-wallet:18.1.0")
     implementation("com.google.auth:google-auth-library-oauth2-http:1.19.0")
 
+    // Retrofit for network calls
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // RecyclerView for chat messages
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
+    // Material design components
+    implementation ("com.google.android.material:material:1.6.0")
+
+    // Standard android dependencies
+    implementation ("androidx.appcompat:appcompat:1.4.1")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.3")
+
 }
